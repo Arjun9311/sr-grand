@@ -18,7 +18,7 @@ export function SiteFooter() {
     <footer className="border-t border-border/70 bg-[#0b0806] pb-24 pt-14 md:pb-10">
       <div className="container grid gap-10 lg:grid-cols-[1.15fr_0.8fr_0.9fr_0.9fr]">
         <div>
-          <LogoMark />
+          <LogoMark imageClassName="size-12 rounded-2xl border-primary/50 shadow-lg" />
           <p className="mt-5 max-w-sm text-sm leading-7 text-muted-foreground">
             {siteConfig.description}
           </p>

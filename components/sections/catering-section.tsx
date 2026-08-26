@@ -61,12 +61,12 @@ export function CateringSection() {
   }, [selectedPkg, selectedOccasion, guestCount, estimatedTotal]);
 
   return (
-    <section id="caterers" className="relative overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-background via-card/50 to-background border-t border-border/60">
-      {/* Decorative ambient glow */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 size-[600px] -translate-x-1/2 rounded-full bg-primary/8 blur-[140px]" />
-      <div className="pointer-events-none absolute -bottom-40 right-10 size-[500px] rounded-full bg-primary/5 blur-[120px]" />
+    <section id="caterers" className="relative overflow-hidden py-20 sm:py-32 bg-gradient-to-b from-background via-card/50 to-background border-t border-border/60 cv-auto">
+      {/* Lightweight GPU-composited ambient radial glow without heavy blur filters */}
+      <div className="pointer-events-none absolute -top-40 left-1/2 size-[500px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.1)_0%,transparent_70%)] gpu-layer" />
+      <div className="pointer-events-none absolute -bottom-40 right-10 size-[400px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.06)_0%,transparent_70%)] gpu-layer" />
 
-      <div className="container relative z-10 space-y-16">
+      <div className="container relative z-10 space-y-12 sm:space-y-16">
         {/* Section Header */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
@@ -75,7 +75,7 @@ export function CateringSection() {
             description="From intimate family pujas and birthdays to 1,000+ guest weddings and corporate summits in Bhongir, Yadagirigutta, and surrounding regions."
           />
           <div className="flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="shadow-md">
+            <Button asChild size="lg" className="shadow-md active:scale-95 transition-transform">
               <TrackedLink
                 href={whatsappInquiryUrl}
                 target="_blank"
@@ -87,7 +87,7 @@ export function CateringSection() {
                 Quick WhatsApp Quote
               </TrackedLink>
             </Button>
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="outline" size="lg" className="active:scale-95 transition-transform">
               <TrackedLink
                 href="/catering"
                 trackingEvent="catering_click"
@@ -101,20 +101,20 @@ export function CateringSection() {
         </div>
 
         {/* Stats Strip */}
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
           {cateringStats.map((stat, idx) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              className="rounded-2xl border border-border/70 bg-card/80 p-5 text-center shadow-sm backdrop-blur-sm"
+              viewport={{ once: true, margin: "0px 0px -30px 0px" }}
+              transition={{ delay: idx * 0.05, duration: 0.35 }}
+              className="rounded-2xl border border-border/70 bg-card/80 p-4 sm:p-5 text-center shadow-sm gpu-layer"
             >
-              <p className="font-display text-3xl font-extrabold text-primary sm:text-4xl">
+              <p className="font-display text-2xl font-extrabold text-primary sm:text-4xl">
                 {stat.value}
               </p>
-              <p className="mt-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <p className="mt-1 text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 {stat.label}
               </p>
             </motion.div>
@@ -136,14 +136,13 @@ export function CateringSection() {
             {cateringPackages.map((pkg) => {
               const isSelected = selectedPackageId === pkg.id;
               return (
-                <motion.div
+                <div
                   key={pkg.id}
-                  whileHover={{ y: -6 }}
                   onClick={() => setSelectedPackageId(pkg.id)}
                   className={cn(
-                    "cursor-pointer group flex flex-col justify-between overflow-hidden rounded-3xl border transition-all duration-300 shadow-md",
+                    "cursor-pointer group flex flex-col justify-between overflow-hidden rounded-3xl border transition-all duration-200 shadow-md gpu-layer active:scale-[0.99]",
                     isSelected
-                      ? "border-primary bg-card ring-2 ring-primary/40 shadow-primary/10 shadow-xl"
+                      ? "border-primary bg-card ring-2 ring-primary/40 shadow-primary/10 shadow-lg"
                       : "border-border/70 bg-card/70 hover:border-primary/50"
                   )}
                 >
@@ -152,30 +151,30 @@ export function CateringSection() {
                       src={pkg.image}
                       alt={pkg.name}
                       fill
-                      sizes="(min-width: 1024px) 33vw, 100vw"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       placeholder="blur"
                       blurDataURL={warmBlurDataUrl}
-                      className="object-cover transition duration-700 group-hover:scale-105"
+                      className="object-cover transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent" />
                     
                     {pkg.popular ? (
-                      <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground border-none font-semibold">
+                      <Badge className="absolute top-3.5 left-3.5 bg-primary text-primary-foreground border-none font-semibold text-xs">
                         <Flame className="mr-1.5 size-3.5" />
                         Most Requested
                       </Badge>
                     ) : null}
 
-                    <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                    <div className="absolute bottom-3 left-3.5 right-3.5 flex items-end justify-between">
                       <div>
-                        <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                        <span className="text-[10px] sm:text-xs font-semibold text-primary uppercase tracking-wider">
                           Starts at
                         </span>
-                        <p className="font-display text-2xl font-black text-foreground">
+                        <p className="font-display text-xl sm:text-2xl font-black text-foreground">
                           {pkg.startingPrice}
                         </p>
                       </div>
-                      <Badge variant="outline" className="bg-background/80 backdrop-blur-sm border-border text-xs">
+                      <Badge variant="outline" className="bg-background/85 border-border text-[11px] sm:text-xs">
                         Min {pkg.minGuests}+ Guests
                       </Badge>
                     </div>
@@ -219,7 +218,7 @@ export function CateringSection() {
                       </Button>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
           </div>

@@ -11,11 +11,11 @@ type RevealProps = HTMLMotionProps<"div"> & {
 export function Reveal({ children, className, delay = 0, ...props }: RevealProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ delay, duration: 0.65 }}
-      className={className}
+      viewport={{ once: true, margin: "0px 0px -30px 0px", amount: "some" }}
+      transition={{ delay, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+      className={cn("gpu-layer", className)}
       {...props}
     >
       {children}
@@ -32,16 +32,16 @@ export function Stagger({
     <motion.div
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "0px 0px -30px 0px", amount: "some" }}
       variants={{
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: 0.08
+            staggerChildren: 0.06
           }
         }
       }}
-      className={cn(className)}
+      className={cn("gpu-layer", className)}
       {...props}
     >
       {children}
@@ -57,10 +57,10 @@ export function StaggerItem({
   return (
     <motion.div
       variants={{
-        hidden: { opacity: 0, y: 22 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.58 } }
+        hidden: { opacity: 0, y: 14 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.42, ease: [0.25, 0.1, 0.25, 1] } }
       }}
-      className={className}
+      className={cn("gpu-layer", className)}
       {...props}
     >
       {children}

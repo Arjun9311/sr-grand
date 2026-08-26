@@ -51,6 +51,14 @@ export function createPageMetadata({
       title: fullTitle,
       description,
       images: [absoluteUrl(image, siteConfig.siteUrl)]
+    },
+    icons: {
+      icon: [
+        { url: "/images/logo.png", sizes: "any" }
+      ],
+      apple: [
+        { url: "/images/logo.png" }
+      ]
     }
   };
 }

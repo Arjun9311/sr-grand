@@ -32,16 +32,24 @@
 
   * {
     @apply border-border;
+    -webkit-tap-highlight-color: transparent;
   }
 
   html {
     background: hsl(var(--background));
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
     min-width: 320px;
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
+
+  button, a, [role="button"], input, select, textarea {
+    touch-action: manipulation;
   }
 
   ::selection {
@@ -75,10 +83,9 @@
   }
 
   .glass-panel {
-    background:
-      linear-gradient(180deg, hsl(var(--card) / 0.84), hsl(var(--card) / 0.62)),
-      hsl(var(--card) / 0.72);
-    backdrop-filter: blur(18px);
+    background: linear-gradient(180deg, hsl(var(--card) / 0.92), hsl(var(--card) / 0.8));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .gold-rule {
@@ -88,5 +95,22 @@
 
   .safe-bottom {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .touch-scroll-x {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    touch-action: pan-x;
+  }
+
+  .gpu-layer {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 600px;
   }
 }

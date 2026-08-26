@@ -7,16 +7,16 @@ import { formatPhoneForDisplay } from "@/lib/utils";
 
 export function LocationPreview() {
   return (
-    <section className="py-20 sm:py-24">
-      <div className="container grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+    <section className="py-16 sm:py-24 cv-auto">
+      <div className="container grid gap-8 sm:gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
           <SectionHeading
             eyebrow="Hours & location"
             title="Easy to reach near Bhongir / Bhuvanagiri."
             description="Visitors can call, open maps or send a WhatsApp order without hunting through public listings."
           />
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild>
+          <div className="mt-6 sm:mt-8 flex flex-wrap gap-3">
+            <Button asChild className="active:scale-95 transition-transform shadow-md">
               <TrackedLink
                 href={siteConfig.mapsUrl}
                 target="_blank"
@@ -24,17 +24,17 @@ export function LocationPreview() {
                 trackingEvent="maps_click"
                 trackingMeta={{ placement: "location_preview" }}
               >
-                <Navigation aria-hidden="true" />
+                <Navigation className="mr-1.5 size-4" aria-hidden="true" />
                 Directions
               </TrackedLink>
             </Button>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" className="active:scale-95 transition-transform">
               <TrackedLink
                 href={siteConfig.orderLinks.callOrder}
                 trackingEvent="call_click"
                 trackingMeta={{ placement: "location_preview" }}
               >
-                <Phone aria-hidden="true" />
+                <Phone className="mr-1.5 size-4" aria-hidden="true" />
                 Call Restaurant
               </TrackedLink>
             </Button>
