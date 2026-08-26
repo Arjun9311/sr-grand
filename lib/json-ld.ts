@@ -25,6 +25,7 @@ export function restaurantJsonLd(path = "/") {
     name: siteConfig.businessName,
     alternateName: siteConfig.localBusinessName,
     url: absoluteUrl(path, siteConfig.siteUrl),
+    logo: absoluteUrl("/images/logo.png", siteConfig.siteUrl),
     image: absoluteUrl("/images/hero-biryani.png", siteConfig.siteUrl),
     description: siteConfig.description,
     telephone: siteConfig.phones.primary,

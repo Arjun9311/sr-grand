@@ -114,28 +114,28 @@ export function MenuBrowser() {
 
   return (
     <div className="space-y-8">
-      {/* Search & Category Filter Controls - sticky top adjusted for mobile header h-16 and desktop h-20 */}
-      <div className="sticky top-16 z-30 -mx-4 space-y-3 border-y border-border/80 bg-background/95 p-3.5 shadow-md backdrop-blur-md transition-all sm:top-20 sm:mx-0 sm:rounded-2xl sm:border sm:p-5">
+      {/* Search & Category Filter Controls */}
+      <div className="sticky top-20 z-30 -mx-4 space-y-3 border-y border-border/70 bg-background/95 p-3.5 shadow-sm backdrop-blur-xl sm:top-20 sm:mx-0 sm:rounded-2xl sm:border sm:p-5">
         <div className="grid gap-3 lg:grid-cols-[1fr_320px]">
-          {/* Category tabs with smooth touch momentum */}
-          <div className="flex gap-2 overflow-x-auto pb-1 touch-scroll-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {/* Category tabs */}
+          <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {menuCategories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
                 aria-pressed={activeCategory === category.id}
                 className={cn(
-                  "relative h-10 sm:h-11 shrink-0 rounded-full px-4 text-xs sm:text-sm font-semibold transition-colors active:scale-95",
+                  "relative h-10 shrink-0 rounded-full px-3.5 text-xs sm:text-sm font-semibold transition hover:text-foreground",
                   activeCategory === category.id
-                    ? "text-primary-foreground font-bold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground"
                 )}
               >
                 {activeCategory === category.id ? (
                   <motion.span
                     layoutId="menu-category-pill"
                     className="absolute inset-0 rounded-full bg-primary shadow-sm"
-                    transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
+                    transition={{ duration: 0.28 }}
                   />
                 ) : (
                   <span className="absolute inset-0 rounded-full border border-border/70 bg-secondary/30 transition hover:bg-secondary/60" />
@@ -148,17 +148,17 @@ export function MenuBrowser() {
           {/* Search bar */}
           <label className="relative block">
             <span className="sr-only">Search menu items</span>
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search dishes, paneer, biryani, chicken..."
-              className="pr-9 pl-10 h-10 sm:h-11 rounded-full bg-secondary/20 text-sm"
+              className="pr-9 pl-10 h-10 rounded-full bg-secondary/20 text-xs sm:text-sm"
             />
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground active:scale-95"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 aria-label="Clear search"
               >
                 <X className="size-4" />
@@ -169,11 +169,11 @@ export function MenuBrowser() {
 
         {/* Dietary preference filter pills & Active Count */}
         <div className="flex flex-wrap items-center justify-between gap-2.5 border-t border-border/50 pt-2.5">
-          <div className="flex items-center gap-1.5 overflow-x-auto touch-scroll-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex items-center gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <span className="mr-1 text-[11px] sm:text-xs font-semibold text-muted-foreground">Filter:</span>
             {(
               [
-                { id: "all", label: "All Items" },
+                { id: "all", label: "All" },
                 { id: "veg", label: "Pure Veg 🌿" },
                 { id: "non-veg", label: "Non-Veg 🍗" },
                 { id: "egg", label: "Egg 🥚" }
@@ -183,9 +183,9 @@ export function MenuBrowser() {
                 key={filter.id}
                 onClick={() => setDietaryFilter(filter.id)}
                 className={cn(
-                  "shrink-0 rounded-full px-3 py-1 text-[11px] sm:text-xs font-semibold transition active:scale-95",
+                  "rounded-full px-2.5 py-1 text-[11px] sm:text-xs font-semibold transition shrink-0",
                   dietaryFilter === filter.id
-                    ? "bg-foreground text-background shadow-sm"
+                    ? "bg-foreground text-background shadow"
                     : "border border-border/70 bg-card text-muted-foreground hover:text-foreground"
                 )}
               >
@@ -195,99 +195,112 @@ export function MenuBrowser() {
           </div>
 
           <div className="text-[11px] sm:text-xs text-muted-foreground">
-            Showing <strong className="text-foreground">{filteredItems.length}</strong> dishes
+            Showing <strong className="text-foreground">{filteredItems.length}</strong> items
           </div>
         </div>
       </div>
 
       {/* Category description */}
       {activeCategoryObj && (
-        <div className="flex items-center justify-between px-1">
-          <p className="text-xs sm:text-sm text-muted-foreground">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-muted-foreground">
             {activeCategoryObj.description}
           </p>
         </div>
       )}
 
       {/* Grid of Dishes */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredItems.length ? (
-          filteredItems.map((item) => (
-            <article
-              key={item.id}
-              className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition-all duration-200 hover:border-primary/40 hover:shadow-md gpu-layer"
-            >
-              <MenuItemImage item={item} />
+      <motion.div layout className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <AnimatePresence mode="popLayout">
+          {filteredItems.length ? (
+            filteredItems.map((item) => (
+              <motion.article
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.2 }}
+                whileHover={{ y: -4 }}
+                className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm transition hover:border-primary/40 hover:shadow-md"
+              >
+                <MenuItemImage item={item} />
 
-              <div className="flex flex-1 flex-col justify-between p-4 sm:p-5">
-                <div>
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2">
-                      <DietaryMark dietary={item.dietary} />
-                      {item.bestseller ? (
-                        <Badge className="bg-primary/20 text-primary border-primary/30 text-[10px] sm:text-[11px] font-semibold">
-                          <Sparkles className="mr-1 size-3" />
-                          Bestseller
-                        </Badge>
-                      ) : null}
+                <div className="flex flex-1 flex-col justify-between p-5">
+                  <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <DietaryMark dietary={item.dietary} />
+                        {item.bestseller ? (
+                          <Badge className="bg-primary/20 text-primary border-primary/30 text-[11px] font-semibold">
+                            <Sparkles className="mr-1 size-3" />
+                            Bestseller
+                          </Badge>
+                        ) : null}
+                      </div>
+                      <span className="shrink-0 rounded-full bg-primary/12 px-3 py-1 font-display text-base font-bold text-primary">
+                        {item.price}
+                      </span>
                     </div>
-                    <span className="shrink-0 rounded-full bg-primary/12 px-3 py-1 font-display text-sm sm:text-base font-bold text-primary">
-                      {item.price}
-                    </span>
+
+                    <h3 className="mt-3 font-display text-xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors">
+                      {item.name}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </p>
                   </div>
 
-                  <h3 className="mt-3 font-display text-lg sm:text-xl font-bold leading-snug text-foreground group-hover:text-primary transition-colors">
-                    {item.name}
-                  </h3>
-
-                  <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-muted-foreground line-clamp-2">
-                    {item.description}
-                  </p>
+                  <div className="mt-5 flex items-center justify-between border-t border-border/40 pt-3">
+                    <SpiceDots spice={item.spice} />
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      {item.category}
+                    </span>
+                  </div>
                 </div>
-
-                <div className="mt-4 flex items-center justify-between border-t border-border/40 pt-3">
-                  <SpiceDots spice={item.spice} />
-                  <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    {item.category}
-                  </span>
-                </div>
-              </div>
-            </article>
-          ))
-        ) : (
-          <div className="col-span-full rounded-2xl border border-dashed border-border/80 bg-card/60 p-8 sm:p-12 text-center">
-            <div className="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-primary/10 text-primary">
-              <UtensilsCrossed className="size-6" />
-            </div>
-            <h3 className="font-display text-xl sm:text-2xl font-semibold text-foreground">
-              No matching dishes found
-            </h3>
-            <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-md mx-auto">
-              Try searching for something else, clearing your dietary filter, or choosing a different category.
-            </p>
-            <Button
-              variant="outline"
-              className="mt-5"
-              onClick={() => {
-                setActiveCategory("all");
-                setDietaryFilter("all");
-                setQuery("");
-              }}
+              </motion.article>
+            ))
+          ) : (
+            <motion.div
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="col-span-full rounded-2xl border border-dashed border-border/80 bg-card/60 p-12 text-center"
             >
-              Reset All Filters
-            </Button>
-          </div>
-        )}
-      </div>
+              <div className="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-primary/10 text-primary">
+                <UtensilsCrossed className="size-6" />
+              </div>
+              <h3 className="font-display text-2xl font-semibold text-foreground">
+                No matching dishes found
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground max-w-md mx-auto">
+                Try searching for something else, clearing your dietary filter, or choosing a different category.
+              </p>
+              <Button
+                variant="outline"
+                className="mt-5"
+                onClick={() => {
+                  setActiveCategory("all");
+                  setDietaryFilter("all");
+                  setQuery("");
+                }}
+              >
+                Reset All Filters
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
 
       {/* Call to action card */}
-      <div className="rounded-2xl border border-primary/25 bg-gradient-to-r from-primary/15 via-primary/10 to-primary/5 p-5 sm:p-6 shadow-sm">
+      <div className="rounded-2xl border border-primary/25 bg-gradient-to-r from-primary/15 via-primary/10 to-primary/5 p-6 shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-display text-xl sm:text-2xl font-bold text-foreground">
+            <h2 className="font-display text-2xl font-bold text-foreground">
               Craving your favourites?
             </h2>
-            <p className="mt-1 text-xs sm:text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-muted-foreground">
               Order directly for fast takeaway or delivery in Bhongir via WhatsApp or Zomato.
             </p>
           </div>

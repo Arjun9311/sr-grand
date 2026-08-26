@@ -1,48 +1,60 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
+interface LogoMarkProps {
+  className?: string;
+  imageClassName?: string;
+  showText?: boolean;
+  size?: "sm" | "md" | "lg";
+}
+
 export function LogoMark({
   className,
+  imageClassName,
   showText = true,
-  imageClassName
-}: {
-  className?: string;
-  showText?: boolean;
-  imageClassName?: string;
-}) {
+  size = "md"
+}: LogoMarkProps) {
+  const sizeConfig = {
+    sm: { dimension: 36, container: "size-9 rounded-xl" },
+    md: { dimension: 44, container: "size-11 sm:size-12 rounded-2xl" },
+    lg: { dimension: 56, container: "size-14 sm:size-16 rounded-2xl" }
+  }[size];
+
   return (
     <Link
       href="/"
-      className={cn("group inline-flex items-center gap-2.5 sm:gap-3", className)}
+      className={cn("group inline-flex items-center gap-3", className)}
       aria-label={`${siteConfig.businessName} home`}
     >
-      <div
+      <span
         className={cn(
-          "relative size-10 sm:size-11 shrink-0 overflow-hidden rounded-xl border border-primary/40 bg-[#e51b24] shadow-md transition-transform duration-200 group-hover:scale-105 gpu-layer",
+          "relative grid place-items-center overflow-hidden border border-red-500/40 bg-[#d60000] p-1 shadow-[0_0_18px_rgba(214,0,0,0.28)] transition duration-300 group-hover:scale-105 group-hover:shadow-[0_0_24px_rgba(214,0,0,0.45)]",
+          sizeConfig.container,
           imageClassName
         )}
       >
         <Image
           src="/images/logo.png"
-          alt="SR Grand Family Restaurant Official Logo"
-          fill
-          sizes="48px"
+          alt={`${siteConfig.businessName} logo`}
+          width={sizeConfig.dimension}
+          height={sizeConfig.dimension}
+          className="h-full w-full object-contain"
           priority
-          className="object-cover"
         />
-      </div>
-      {showText ? (
+      </span>
+      {showText && (
         <span className="leading-none">
-          <span className="block font-display text-lg sm:text-xl font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
+          <span className="block font-display text-xl font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-2xl">
             SR Grand
           </span>
-          <span className="block text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] text-primary/90">
+          <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-red-400 sm:text-[11px]">
             Family Restaurant
           </span>
         </span>
-      ) : null}
+      )}
     </Link>
   );
 }
+

@@ -61,12 +61,12 @@ export function CateringSection() {
   }, [selectedPkg, selectedOccasion, guestCount, estimatedTotal]);
 
   return (
-    <section id="caterers" className="relative overflow-hidden py-20 sm:py-32 bg-gradient-to-b from-background via-card/50 to-background border-t border-border/60 cv-auto">
-      {/* Lightweight GPU-composited ambient radial glow without heavy blur filters */}
-      <div className="pointer-events-none absolute -top-40 left-1/2 size-[500px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.1)_0%,transparent_70%)] gpu-layer" />
-      <div className="pointer-events-none absolute -bottom-40 right-10 size-[400px] rounded-full bg-[radial-gradient(circle,hsl(var(--primary)/0.06)_0%,transparent_70%)] gpu-layer" />
+    <section id="caterers" className="relative overflow-hidden py-24 sm:py-32 bg-gradient-to-b from-background via-card/50 to-background border-t border-border/60">
+      {/* Decorative ambient glow */}
+      <div className="pointer-events-none absolute -top-40 left-1/2 size-[600px] -translate-x-1/2 rounded-full bg-primary/8 blur-[140px]" />
+      <div className="pointer-events-none absolute -bottom-40 right-10 size-[500px] rounded-full bg-primary/5 blur-[120px]" />
 
-      <div className="container relative z-10 space-y-12 sm:space-y-16">
+      <div className="container relative z-10 space-y-16">
         {/* Section Header */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
@@ -75,7 +75,7 @@ export function CateringSection() {
             description="From intimate family pujas and birthdays to 1,000+ guest weddings and corporate summits in Bhongir, Yadagirigutta, and surrounding regions."
           />
           <div className="flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="shadow-md active:scale-95 transition-transform">
+            <Button asChild size="lg" className="shadow-md">
               <TrackedLink
                 href={whatsappInquiryUrl}
                 target="_blank"
@@ -87,7 +87,7 @@ export function CateringSection() {
                 Quick WhatsApp Quote
               </TrackedLink>
             </Button>
-            <Button asChild variant="outline" size="lg" className="active:scale-95 transition-transform">
+            <Button asChild variant="outline" size="lg">
               <TrackedLink
                 href="/catering"
                 trackingEvent="catering_click"
@@ -101,20 +101,20 @@ export function CateringSection() {
         </div>
 
         {/* Stats Strip */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
           {cateringStats.map((stat, idx) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -30px 0px" }}
-              transition={{ delay: idx * 0.05, duration: 0.35 }}
-              className="rounded-2xl border border-border/70 bg-card/80 p-4 sm:p-5 text-center shadow-sm gpu-layer"
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.08 }}
+              className="rounded-2xl border border-border/70 bg-card/80 p-5 text-center shadow-sm backdrop-blur-sm"
             >
-              <p className="font-display text-2xl font-extrabold text-primary sm:text-4xl">
+              <p className="font-display text-3xl font-extrabold text-primary sm:text-4xl">
                 {stat.value}
               </p>
-              <p className="mt-1 text-[10px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              <p className="mt-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 {stat.label}
               </p>
             </motion.div>
@@ -136,13 +136,14 @@ export function CateringSection() {
             {cateringPackages.map((pkg) => {
               const isSelected = selectedPackageId === pkg.id;
               return (
-                <div
+                <motion.div
                   key={pkg.id}
+                  whileHover={{ y: -6 }}
                   onClick={() => setSelectedPackageId(pkg.id)}
                   className={cn(
-                    "cursor-pointer group flex flex-col justify-between overflow-hidden rounded-3xl border transition-all duration-200 shadow-md gpu-layer active:scale-[0.99]",
+                    "cursor-pointer group flex flex-col justify-between overflow-hidden rounded-3xl border transition-all duration-300 shadow-md",
                     isSelected
-                      ? "border-primary bg-card ring-2 ring-primary/40 shadow-primary/10 shadow-lg"
+                      ? "border-primary bg-card ring-2 ring-primary/40 shadow-primary/10 shadow-xl"
                       : "border-border/70 bg-card/70 hover:border-primary/50"
                   )}
                 >
@@ -151,30 +152,30 @@ export function CateringSection() {
                       src={pkg.image}
                       alt={pkg.name}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(min-width: 1024px) 33vw, 100vw"
                       placeholder="blur"
                       blurDataURL={warmBlurDataUrl}
-                      className="object-cover transition duration-500 group-hover:scale-105"
+                      className="object-cover transition duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/40 to-transparent" />
                     
                     {pkg.popular ? (
-                      <Badge className="absolute top-3.5 left-3.5 bg-primary text-primary-foreground border-none font-semibold text-xs">
+                      <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground border-none font-semibold">
                         <Flame className="mr-1.5 size-3.5" />
                         Most Requested
                       </Badge>
                     ) : null}
 
-                    <div className="absolute bottom-3 left-3.5 right-3.5 flex items-end justify-between">
+                    <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                       <div>
-                        <span className="text-[10px] sm:text-xs font-semibold text-primary uppercase tracking-wider">
+                        <span className="text-xs font-semibold text-primary uppercase tracking-wider">
                           Starts at
                         </span>
-                        <p className="font-display text-xl sm:text-2xl font-black text-foreground">
+                        <p className="font-display text-2xl font-black text-foreground">
                           {pkg.startingPrice}
                         </p>
                       </div>
-                      <Badge variant="outline" className="bg-background/85 border-border text-[11px] sm:text-xs">
+                      <Badge variant="outline" className="bg-background/80 backdrop-blur-sm border-border text-xs">
                         Min {pkg.minGuests}+ Guests
                       </Badge>
                     </div>
@@ -218,25 +219,25 @@ export function CateringSection() {
                       </Button>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
         </div>
 
         {/* Interactive Instant Catering Estimator */}
-        <div className="rounded-3xl border border-primary/30 bg-gradient-to-br from-card via-card/95 to-primary/5 p-6 shadow-xl sm:p-10">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div className="rounded-3xl border border-primary/30 bg-gradient-to-br from-card via-card/95 to-primary/5 p-4 sm:p-8 lg:p-10 shadow-xl overflow-hidden">
+          <div className="grid gap-8 lg:gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-primary">
-                <Calculator className="size-3.5" />
+                <Calculator className="size-3.5 shrink-0" />
                 Instant Catering Estimator
               </div>
 
-              <h3 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
+              <h3 className="font-display text-2xl font-bold text-foreground sm:text-3xl lg:text-4xl">
                 Plan your event with transparent pricing.
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                 Choose your occasion and guest count to get an estimated quote. Our head catering coordinator will customize the exact menu, sweets, and live counters for your date.
               </p>
 
@@ -245,13 +246,13 @@ export function CateringSection() {
                 <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground block mb-2.5">
                   Select Event Occasion:
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {cateringOccasions.map((occ) => (
                     <button
                       key={occ.name}
                       onClick={() => setSelectedOccasion(occ.name)}
                       className={cn(
-                        "rounded-full px-3.5 py-1.5 text-xs font-semibold transition",
+                        "rounded-full px-3 py-1.5 text-xs font-semibold transition",
                         selectedOccasion === occ.name
                           ? "bg-primary text-primary-foreground shadow"
                           : "border border-border/70 bg-secondary/30 text-muted-foreground hover:text-foreground hover:bg-secondary/60"
@@ -263,13 +264,13 @@ export function CateringSection() {
                 </div>
               </div>
 
-              {/* Guest Count Slider & Pills */}
+              {/* Guest Count Slider & Labels */}
               <div className="space-y-3">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between gap-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                     Number of Guests:
                   </label>
-                  <span className="font-display text-2xl font-black text-primary">
+                  <span className="font-display text-xl sm:text-2xl font-black text-primary shrink-0">
                     {guestCount} Guests
                   </span>
                 </div>
@@ -284,58 +285,58 @@ export function CateringSection() {
                   className="w-full accent-primary h-2 bg-secondary rounded-lg cursor-pointer"
                 />
 
-                <div className="flex justify-between text-[11px] text-muted-foreground font-semibold">
-                  <span>25 Guests (Intimate)</span>
-                  <span>250 Guests (Medium)</span>
-                  <span>500+ Guests (Large Banquet)</span>
+                <div className="flex items-center justify-between text-[10px] sm:text-xs text-muted-foreground font-semibold">
+                  <span>25 (Intimate)</span>
+                  <span>250 (Medium)</span>
+                  <span className="text-right">500+ (Banquet)</span>
                 </div>
               </div>
             </div>
 
             {/* Estimated Quote Card */}
-            <div className="rounded-2xl border border-border/80 bg-background/80 p-6 sm:p-8 shadow-md backdrop-blur-md space-y-6">
-              <div className="flex items-center justify-between border-b border-border/60 pb-4">
+            <div className="rounded-2xl border border-border/80 bg-background/80 p-4 sm:p-6 lg:p-8 shadow-md backdrop-blur-md space-y-5">
+              <div className="flex items-start sm:items-center justify-between gap-2 border-b border-border/60 pb-4">
                 <div>
-                  <span className="text-xs font-semibold text-muted-foreground uppercase">
+                  <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                     Selected Package
                   </span>
-                  <h4 className="font-display text-xl font-bold text-foreground">
+                  <h4 className="font-display text-lg sm:text-xl font-bold text-foreground">
                     {selectedPkg.name}
                   </h4>
                 </div>
-                <Badge className="bg-leaf/20 text-leaf border-leaf/30 font-semibold">
+                <Badge className="bg-leaf/20 text-leaf border-leaf/30 font-semibold shrink-0">
                   {guestCount} Pax
                 </Badge>
               </div>
 
-              <div className="space-y-3 text-sm">
-                <div className="flex justify-between text-muted-foreground">
+              <div className="space-y-2.5 text-xs sm:text-sm">
+                <div className="flex flex-wrap items-center justify-between gap-1 text-muted-foreground">
                   <span>Occasion:</span>
-                  <strong className="text-foreground">{selectedOccasion}</strong>
+                  <strong className="text-foreground text-right">{selectedOccasion}</strong>
                 </div>
-                <div className="flex justify-between text-muted-foreground">
+                <div className="flex flex-wrap items-center justify-between gap-1 text-muted-foreground">
                   <span>Base Rate:</span>
-                  <span className="text-foreground">₹{pricePerGuest} / plate</span>
+                  <span className="text-foreground text-right">₹{pricePerGuest} / plate</span>
                 </div>
-                <div className="flex justify-between text-muted-foreground">
+                <div className="flex flex-wrap items-center justify-between gap-1 text-muted-foreground">
                   <span>Included Service:</span>
-                  <span className="text-leaf font-medium">Hot Delivery + Salan/Raita</span>
+                  <span className="text-leaf font-medium text-right">Hot Delivery + Salan/Raita</span>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-primary/20 bg-primary/10 p-4 text-center">
-                <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+              <div className="rounded-xl border border-primary/20 bg-primary/10 p-3.5 sm:p-4 text-center">
+                <span className="text-[11px] sm:text-xs font-semibold text-primary uppercase tracking-wider">
                   Approximate Estimate
                 </span>
-                <p className="font-display text-4xl font-extrabold text-foreground mt-1">
+                <p className="font-display text-3xl sm:text-4xl font-extrabold text-foreground mt-1">
                   ₹{estimatedTotal}
                 </p>
-                <span className="text-[11px] text-muted-foreground">
+                <span className="text-[10px] sm:text-[11px] text-muted-foreground block mt-1 leading-tight">
                   *Taxes, travel, and custom live counters computed upon final menu confirmation
                 </span>
               </div>
 
-              <div className="space-y-3 pt-2">
+              <div className="space-y-3 pt-1">
                 <Button asChild size="lg" className="w-full shadow-lg font-bold">
                   <TrackedLink
                     href={whatsappInquiryUrl}
@@ -344,17 +345,19 @@ export function CateringSection() {
                     trackingEvent="whatsapp_click"
                     trackingMeta={{ placement: "catering_calculator" }}
                   >
-                    <MessageCircle className="mr-2 size-5" />
-                    Book / Inquire via WhatsApp
+                    <MessageCircle className="mr-2 size-4 sm:size-5 shrink-0" />
+                    <span className="truncate">Book / Inquire via WhatsApp</span>
                   </TrackedLink>
                 </Button>
 
-                <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                  <Phone className="size-3.5 text-primary" />
-                  <span>Call Catering Coordinator:</span>
+                <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs text-muted-foreground text-center">
+                  <div className="inline-flex items-center gap-1">
+                    <Phone className="size-3.5 text-primary shrink-0" />
+                    <span>Call Coordinator:</span>
+                  </div>
                   <a
                     href={siteConfig.orderLinks.callOrder}
-                    className="font-bold text-primary hover:underline"
+                    className="font-bold text-primary hover:underline whitespace-nowrap"
                   >
                     {formatPhoneForDisplay(siteConfig.phones.primary)}
                   </a>

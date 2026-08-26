@@ -25,41 +25,23 @@ export function SiteHeader() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => {
-      const isScrolled = window.scrollY > 16;
-      setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
-    };
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-colors duration-200",
-        scrolled ? "border-b border-border/70 bg-background/94 shadow-md backdrop-blur-md" : "bg-transparent"
+        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        scrolled ? "border-b border-border/70 bg-background/88 shadow-lg backdrop-blur-xl" : "bg-transparent"
       )}
     >
-      <nav className="container flex h-16 sm:h-20 items-center justify-between" aria-label="Main navigation">
+      <nav className="container flex h-20 items-center justify-between" aria-label="Main navigation">
         <LogoMark />
 
-        <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/25 p-1 backdrop-blur-md lg:flex">
+        <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-black/18 p-1 backdrop-blur-md lg:flex">
           {navItems.map((item) => {
             const active = pathname === item.href;
             return (
@@ -67,15 +49,15 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground",
-                  active && "text-foreground font-semibold"
+                  "relative rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground",
+                  active && "text-foreground"
                 )}
               >
                 {active ? (
                   <motion.span
                     layoutId="nav-pill"
                     className="absolute inset-0 rounded-full bg-primary/16"
-                    transition={{ duration: 0.25 }}
+                    transition={{ duration: 0.35 }}
                   />
                 ) : null}
                 <span className="relative z-10">{item.label}</span>
@@ -107,46 +89,45 @@ export function SiteHeader() {
         <Button
           variant="outline"
           size="icon"
-          className="lg:hidden active:scale-95 transition-transform"
+          className="lg:hidden"
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-label="Open navigation menu"
         >
-          {open ? <X aria-hidden="true" className="size-5" /> : <Menu aria-hidden="true" className="size-5" />}
+          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </Button>
       </nav>
 
       <AnimatePresence>
         {open ? (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            className="container pb-4 lg:hidden max-h-[calc(100svh-4.5rem)] overflow-y-auto"
+            exit={{ opacity: 0, y: -12 }}
+            className="container pb-4 lg:hidden"
           >
-            <div className="glass-panel grid gap-2 rounded-2xl border border-border/80 p-3 shadow-xl">
+            <div className="glass-panel grid gap-2 rounded-2xl border border-border/70 p-3">
               {navItems.map((item) => (
                 <TrackedLink
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    "rounded-xl px-4 py-3 text-base font-semibold text-muted-foreground transition-colors active:bg-primary/20",
-                    pathname === item.href ? "bg-primary/15 text-primary" : "hover:bg-primary/10 hover:text-foreground"
+                    "rounded-xl px-4 py-3 text-sm font-semibold text-muted-foreground transition hover:bg-primary/10 hover:text-foreground",
+                    pathname === item.href && "bg-primary/12 text-foreground"
                   )}
                 >
                   {item.label}
                 </TrackedLink>
               ))}
-              <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border/50">
-                <Button asChild variant="outline" className="active:scale-95 transition-transform">
+              <div className="grid grid-cols-2 gap-2 pt-2">
+                <Button asChild variant="outline">
                   <TrackedLink href={siteConfig.orderLinks.callOrder} trackingEvent="call_click">
-                    <Phone aria-hidden="true" className="mr-1.5 size-4" />
+                    <Phone aria-hidden="true" />
                     Call
                   </TrackedLink>
                 </Button>
-                <Button asChild className="active:scale-95 transition-transform">
+                <Button asChild>
                   <TrackedLink
                     href={siteConfig.orderLinks.whatsappOrder}
                     trackingEvent="whatsapp_click"

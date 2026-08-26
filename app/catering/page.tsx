@@ -180,31 +180,31 @@ export default function CateringPage() {
                     </div>
 
                     {/* Menu items breakdown */}
-                    <div className="rounded-2xl border border-border/60 bg-secondary/20 p-4 space-y-2.5 text-xs">
-                      <div className="flex justify-between">
-                        <strong className="text-primary font-bold">Starters:</strong>
-                        <span className="text-foreground text-right">{pkg.menuIncludes.starters.join(", ")}</span>
+                    <div className="rounded-2xl border border-border/60 bg-secondary/20 p-3.5 sm:p-4 space-y-2.5 text-xs">
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5 sm:gap-2">
+                        <strong className="text-primary font-bold shrink-0">Starters:</strong>
+                        <span className="text-foreground sm:text-right">{pkg.menuIncludes.starters.join(", ")}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <strong className="text-primary font-bold">Main Curries:</strong>
-                        <span className="text-foreground text-right">{pkg.menuIncludes.mains.join(", ")}</span>
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5 sm:gap-2">
+                        <strong className="text-primary font-bold shrink-0">Main Curries:</strong>
+                        <span className="text-foreground sm:text-right">{pkg.menuIncludes.mains.join(", ")}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <strong className="text-primary font-bold">Biryani / Rice:</strong>
-                        <span className="text-foreground text-right">{pkg.menuIncludes.riceAndBiryani.join(", ")}</span>
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5 sm:gap-2">
+                        <strong className="text-primary font-bold shrink-0">Biryani / Rice:</strong>
+                        <span className="text-foreground sm:text-right">{pkg.menuIncludes.riceAndBiryani.join(", ")}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <strong className="text-primary font-bold">Breads:</strong>
-                        <span className="text-foreground text-right">{pkg.menuIncludes.breads.join(", ")}</span>
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5 sm:gap-2">
+                        <strong className="text-primary font-bold shrink-0">Breads:</strong>
+                        <span className="text-foreground sm:text-right">{pkg.menuIncludes.breads.join(", ")}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <strong className="text-primary font-bold">Sweet / Drinks:</strong>
-                        <span className="text-foreground text-right">{pkg.menuIncludes.dessertAndDrinks.join(", ")}</span>
+                      <div className="flex flex-col sm:flex-row sm:justify-between gap-0.5 sm:gap-2">
+                        <strong className="text-primary font-bold shrink-0">Sweet / Drinks:</strong>
+                        <span className="text-foreground sm:text-right">{pkg.menuIncludes.dessertAndDrinks.join(", ")}</span>
                       </div>
                     </div>
                   </div>
 
-                  <Button asChild className="w-full font-semibold">
+                  <Button asChild className="w-full font-semibold mt-4">
                     <a href="#inquiry-form">
                       Select for Inquiry
                     </a>

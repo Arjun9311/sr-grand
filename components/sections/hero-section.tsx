@@ -30,60 +30,66 @@ export function HeroSection() {
         <div className="grid gap-10 lg:grid-cols-[1.02fr_0.78fr] lg:items-end">
           <div className="max-w-3xl">
             <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.04, duration: 0.35 }}
-              className="mb-3 sm:mb-4 inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-primary/35 bg-primary/12 px-3 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-primary gpu-layer"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.05 }}
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/35 bg-primary/12 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-primary"
             >
-              <MapPin className="size-3 sm:size-3.5" aria-hidden="true" />
+              <MapPin className="size-3.5" aria-hidden="true" />
               Bhongir / Bhuvanagiri, Telangana
             </motion.p>
 
             <motion.h1
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.08, duration: 0.4 }}
-              className="font-display text-4xl font-semibold leading-[1.06] text-balance text-foreground sm:text-6xl lg:text-7xl gpu-layer"
+              initial={{ opacity: 0, y: 26 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.14 }}
+              className="font-display text-5xl font-semibold leading-[1.02] text-balance text-foreground sm:text-6xl lg:text-7xl"
             >
               {siteConfig.businessName}
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.12, duration: 0.35 }}
-              className="mt-3 sm:mt-4 font-display text-xl sm:text-2xl text-primary/90 gpu-layer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.22 }}
+              className="mt-4 font-display text-2xl text-primary/90"
               lang="te"
             >
               {siteConfig.localBusinessName}
             </motion.p>
 
             <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.16, duration: 0.35 }}
-              className="mt-4 sm:mt-5 max-w-2xl text-sm leading-7 text-cream/85 sm:text-lg sm:leading-8 gpu-layer"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="mt-5 max-w-2xl text-base leading-8 text-cream/82 sm:text-lg"
             >
               Premium biryani, Indo-Chinese favourites and warm family dining for locals,
               takeaway customers and travelers passing through Bhongir.
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.35 }}
-              className="mt-5 sm:mt-6 gpu-layer"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.38 }}
+              className="mt-6"
             >
               <ServiceModeBadges />
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.24, duration: 0.35 }}
-              className="mt-6 sm:mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap gpu-layer"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.46 }}
+              className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
             >
-              <Button asChild size="lg" className="active:scale-95 transition-transform shadow-md">
+              <Button asChild size="lg">
                 <TrackedLink
                   href={siteConfig.orderLinks.zomato || siteConfig.orderLinks.whatsappOrder}
                   target="_blank"
@@ -91,12 +97,12 @@ export function HeroSection() {
                   trackingEvent="order_click"
                   trackingMeta={{ placement: "hero" }}
                 >
-                  <ShoppingBag aria-hidden="true" className="mr-1.5 size-4" />
+                  <ShoppingBag aria-hidden="true" />
                   Order Now
-                  <ArrowRight aria-hidden="true" className="ml-1.5 size-4" />
+                  <ArrowRight aria-hidden="true" />
                 </TrackedLink>
               </Button>
-              <Button asChild size="lg" variant="outline" className="active:scale-95 transition-transform">
+              <Button asChild size="lg" variant="outline">
                 <TrackedLink
                   href="/menu"
                   trackingEvent="menu_click"
@@ -105,7 +111,7 @@ export function HeroSection() {
                   View Menu
                 </TrackedLink>
               </Button>
-              <Button asChild size="lg" variant="secondary" className="active:scale-95 transition-transform">
+              <Button asChild size="lg" variant="secondary">
                 <TrackedLink
                   href={siteConfig.orderLinks.whatsappOrder}
                   target="_blank"
@@ -113,7 +119,7 @@ export function HeroSection() {
                   trackingEvent="whatsapp_click"
                   trackingMeta={{ placement: "hero" }}
                 >
-                  <MessageCircle aria-hidden="true" className="mr-1.5 size-4" />
+                  <MessageCircle aria-hidden="true" />
                   WhatsApp
                 </TrackedLink>
               </Button>

@@ -38,7 +38,6 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  viewportFit: "cover",
   themeColor: "#140f0c"
 };
 
@@ -48,7 +47,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <body className="font-sans">
         <MotionProvider>
           <SiteHeader />
-          <main className="pb-14 md:pb-0">{children}</main>
+          <main className="overflow-x-hidden min-h-screen">{children}</main>
           <SiteFooter />
           <MobileActionBar />
           <Toaster

@@ -30,6 +30,11 @@ export function createPageMetadata({
     alternates: {
       canonical: url
     },
+    icons: {
+      icon: "/images/logo.png",
+      shortcut: "/images/logo.png",
+      apple: "/images/logo.png"
+    },
     openGraph: {
       type: "website",
       locale: "en_IN",
@@ -51,14 +56,6 @@ export function createPageMetadata({
       title: fullTitle,
       description,
       images: [absoluteUrl(image, siteConfig.siteUrl)]
-    },
-    icons: {
-      icon: [
-        { url: "/images/logo.png", sizes: "any" }
-      ],
-      apple: [
-        { url: "/images/logo.png" }
-      ]
     }
   };
 }

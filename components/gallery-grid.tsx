@@ -22,35 +22,24 @@ export function GalleryGrid() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  useEffect(() => {
-    if (selected) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [selected]);
-
   return (
     <>
-      <div className="mb-8 flex gap-2 overflow-x-auto pb-1 touch-scroll-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="mb-8 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {galleryCategories.map((category) => (
           <button
             key={category}
             onClick={() => setActive(category)}
             aria-pressed={active === category}
             className={cn(
-              "relative h-10 sm:h-11 shrink-0 rounded-full px-4 text-xs sm:text-sm font-semibold transition active:scale-95",
-              active === category ? "text-primary-foreground font-bold" : "text-muted-foreground hover:text-foreground"
+              "relative h-11 shrink-0 rounded-full px-4 text-sm font-semibold text-muted-foreground transition hover:text-foreground",
+              active === category && "text-primary-foreground"
             )}
           >
             {active === category ? (
               <motion.span
                 layoutId="gallery-filter-pill"
-                className="absolute inset-0 rounded-full bg-primary shadow-sm"
-                transition={{ duration: 0.22 }}
+                className="absolute inset-0 rounded-full bg-primary"
+                transition={{ duration: 0.32 }}
               />
             ) : (
               <span className="absolute inset-0 rounded-full border border-border/70 bg-secondary/30" />
@@ -60,13 +49,15 @@ export function GalleryGrid() {
         ))}
       </div>
 
-      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3">
+      <motion.div layout className="columns-1 gap-4 sm:columns-2 lg:columns-3">
         {filtered.map((item) => (
-          <button
+          <motion.button
             key={item.id}
+            layout
+            whileHover={{ y: -4 }}
             onClick={() => setSelected(item)}
             aria-label={`${item.category}: ${item.title}`}
-            className="group mb-4 block w-full overflow-hidden rounded-2xl border border-border/70 bg-card text-left transition-all duration-200 hover:border-primary/40 hover:shadow-md active:scale-[0.99] gpu-layer"
+            className="group mb-4 block w-full overflow-hidden rounded-2xl border border-border/70 bg-card text-left"
           >
             <div
               className={cn(
@@ -80,24 +71,24 @@ export function GalleryGrid() {
                 src={item.image}
                 alt={item.alt}
                 fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 placeholder="blur"
                 blurDataURL={warmBlurDataUrl}
-                className="object-cover transition duration-500 group-hover:scale-105"
+                className="object-cover transition duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/86 via-transparent to-transparent opacity-80" />
               <div className="absolute inset-x-0 bottom-0 p-4">
-                <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                   {item.category}
                 </p>
-                <h2 className="mt-1 font-display text-xl sm:text-2xl font-semibold text-foreground">
+                <h2 className="mt-1 font-display text-2xl font-semibold text-foreground">
                   {item.title}
                 </h2>
               </div>
             </div>
-          </button>
+          </motion.button>
         ))}
-      </div>
+      </motion.div>
 
       <AnimatePresence>
         {selected ? (
@@ -108,43 +99,41 @@ export function GalleryGrid() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[80] grid place-items-center bg-background/90 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-[80] grid place-items-center bg-background/88 p-4 backdrop-blur-xl"
             onClick={() => setSelected(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 12 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 12 }}
-              transition={{ duration: 0.22, ease: [0.25, 0.1, 0.25, 1] }}
-              className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-border/80 bg-card shadow-2xl gpu-layer"
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 12, scale: 0.98 }}
+              className="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-border/70 bg-card"
               onClick={(event) => event.stopPropagation()}
             >
               <Button
                 variant="secondary"
                 size="icon"
-                className="absolute right-3 top-3 z-10 active:scale-95 shadow-md"
+                className="absolute right-3 top-3 z-10"
                 onClick={() => setSelected(null)}
                 aria-label="Close gallery image"
               >
                 <X aria-hidden="true" />
               </Button>
-              <div className="relative aspect-[16/10] max-h-[70vh]">
+              <div className="relative aspect-[16/10] max-h-[76vh]">
                 <Image
                   src={selected.image}
                   alt={selected.alt}
                   fill
-                  sizes="(max-width: 768px) 100vw, 90vw"
+                  sizes="90vw"
                   placeholder="blur"
                   blurDataURL={warmBlurDataUrl}
                   className="object-contain"
                 />
               </div>
-              <div className="border-t border-border/70 p-4 sm:p-5 bg-card">
+              <div className="border-t border-border/70 p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                   {selected.category}
                 </p>
-                <h2 className="mt-1.5 font-display text-2xl sm:text-3xl font-semibold text-foreground">
+                <h2 className="mt-2 font-display text-3xl font-semibold text-foreground">
                   {selected.title}
                 </h2>
               </div>
